@@ -1,0 +1,373 @@
+{
+    "levels": [
+      {
+        "title": "Your First Variable",
+        "description": "Declare a variable named 'fish' using var",
+        "correctSequence": ["var", "fish"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["fish"],
+          "operators": [],
+          "values": []
+        },
+        "hint": "Variables need to be declared before use",
+        "effect": "You've created your first variable!",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "In JavaScript, we declare variables using keywords",
+          "The 'var' keyword creates a new variable",
+          "After var, we give our variable a name"
+        ]
+      },
+      {
+        "title": "Initialize a Variable",
+        "description": "Give your fish variable a size of 5",
+        "correctSequence": ["fish", "=", "5"],
+        "codeItems": {
+          "keywords": [],
+          "variables": ["fish"],
+          "operators": ["="],
+          "values": ["5"]
+        },
+        "hint": "Use = to assign values",
+        "effect": "Your fish now has a size!",
+        "showPrevious": true,
+        "previousContext": "We already declared our fish:",
+        "hints": [
+          "Variables can store values",
+          "The = symbol assigns values to variables",
+          "Put the value 5 on the right side of ="
+        ]
+      },
+      {
+        "title": "Increase the Size",
+        "description": "Make the fish bigger by adding 10 to its current size",
+        "correctSequence": ["fish", "=", "fish", "+", "10"],
+        "codeItems": {
+          "keywords": [],
+          "variables": ["fish"],
+          "operators": ["=", "+"],
+          "values": ["10"]
+        },
+        "hint": "Use the current value to calculate the new one",
+        "effect": "The fish grew bigger!",
+        "showPrevious": true,
+        "previousContext": "Our fish has a size of 5:",
+        "hints": [
+          "We can use the current fish size in calculations",
+          "The + operator adds numbers together",
+          "New value = current value + increase amount"
+        ]
+      },
+      {
+        "title": "Create a Second Fish",
+        "description": "Declare a new variable named 'shark'",
+        "correctSequence": ["var", "shark"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["shark"],
+          "operators": [],
+          "values": []
+        },
+        "hint": "Use var just like with the first fish",
+        "effect": "You've created a shark variable!",
+        "showPrevious": true,
+        "previousContext": "We have our fish variable:",
+        "hints": [
+          "We can create multiple variables",
+          "Each new variable needs var",
+          "Use the same pattern as the first variable"
+        ]
+      },
+      {
+        "title": "Big Shark",
+        "description": "Set the shark's size to 20",
+        "correctSequence": ["shark", "=", "20"],
+        "codeItems": {
+          "keywords": [],
+          "variables": ["shark"],
+          "operators": ["="],
+          "values": ["20"]
+        },
+        "hint": "Assign a value to shark",
+        "effect": "The shark is now size 20!",
+        "showPrevious": true,
+        "previousContext": "We declared our shark:",
+        "hints": [
+          "Use = to give shark a size",
+          "20 is bigger than our fish's size",
+          "shark = 20 will set the size"
+        ]
+      },
+      {
+        "title": "Copy Fish Size",
+        "description": "Make a new variable 'baby' equal to fish's size",
+        "correctSequence": ["var", "baby", "=", "fish"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["baby", "fish"],
+          "operators": ["="],
+          "values": []
+        },
+        "hint": "Declare and initialize in one line",
+        "effect": "Baby fish is born!",
+        "showPrevious": true,
+        "previousContext": "We have our fish variable:",
+        "hints": [
+          "We can declare and assign in one step",
+          "Use the fish variable's value",
+          "var baby = fish combines declaration and assignment"
+        ]
+      },
+      {
+        "title": "Name Your Fish",
+        "description": "Set the fish variable to the string 'Nemo'",
+        "correctSequence": ["fish", "=", "'Nemo'"],
+        "codeItems": {
+          "keywords": [],
+          "variables": ["fish"],
+          "operators": ["="],
+          "values": ["'Nemo'"]
+        },
+        "hint": "Strings need single quotes around them",
+        "effect": "Your fish is named!",
+        "showPrevious": false,
+        "previousContext": "We declared our fish variable:",
+        "hints": [
+          "Text values in JavaScript are called strings",
+          "Strings need to be wrapped in quotes",
+          "Use = to assign the name 'Nemo' to fish"
+        ]
+      },
+      {
+        "title": "Fish Species",
+        "description": "Create a new variable 'species' and set it to fish + ' is a clownfish'",
+        "correctSequence": ["var", "species", "=", "fish", "+", "'is a clownfish'"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["species", "fish"],
+          "operators": ["=", "+"],
+          "values": ["'is a clownfish'"]
+        },
+        "hint": "We can combine strings using +",
+        "effect": "Species description created!",
+        "showPrevious": true,
+        "previousContext": "fish is set to 'Nemo':",
+        "hints": [
+          "The + operator can join strings together",
+          "This is called string concatenation",
+          "The result will be 'Nemo is a clownfish'"
+        ]
+      },
+      {
+        "title": "Expression Result",
+        "description": "What will math equal? Create: var math = 5 + 3 * 2",
+        "correctSequence": ["11"],
+        "codeItems": {
+          "values": ["11", "16", "13", "0"]
+        },
+        "hint": "Multiplication happens before addition",
+        "effect": "Correct! Multiplication before addition gives us 11",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "* has higher precedence than +",
+          "First calculate 3 * 2 = 6",
+          "Then add 5 to get 11"
+        ]
+      },
+      {
+        "title": "Create a feed Variable",
+        "description": "Declare a variable called 'feed' and set it to 0",
+        "correctSequence": ["var", "feed", "=", "0"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["feed"],
+          "operators": ["="],
+          "values": ["0"]
+        },
+        "hint": "Use var to declare a new variable",
+        "effect": "Feed variable created!",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "Declare a new variable called feed",
+          "Use = to assign the value 0 to feed",
+          "var feed = 0 will create and set the variable"
+        ]
+      },
+      {
+        "title": "Boolean Operation",
+        "description": "Create a variable called isHungry and assign it to feed is equal to 0",
+        "correctSequence": ["var", "isHungry", "=", "feed", "===", "0"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["isHungry", "feed"],
+          "operators": ["=", "==="],
+          "values": ["0"]
+        },
+        "hint": "Use == to check equality",
+        "effect": "Hunger status checked!",
+        "showPrevious": true,
+        "previousContext": "feed is 0:",
+        "hints": [
+          "=== checks if two values are equal",
+          "This will return true or false",
+          "Since feed is 0, isHungry will be true"
+        ]
+      },
+      {
+        "title": "Compare Strings",
+        "description": "What will result equal? var result = 'fish' === 'shark'",
+        "correctSequence": ["false"],
+        "codeItems": {
+          "values": ["true", "false"]
+        },
+        "hint": "Strings are compared alphabetically",
+        "effect": "Correct! 'shark' comes after 'fish'",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "String comparison is alphabetical"
+        ]
+      },
+      {
+        "title": "Tank Width",
+        "description": "Create a variable 'width' set to 100",
+        "correctSequence": ["var", "width", "=", "100"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["width"],
+          "operators": ["="],
+          "values": ["100"]
+        },
+        "hint": "Declare and initialize width",
+        "effect": "Tank width is set!",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "Create a new variable for the tank",
+          "Combine var and = in one line",
+          "var width = 100 sets it directly"
+        ]
+      },
+      {
+        "title": "Tank Height",
+        "description": "Make height half of width",
+        "correctSequence": ["var", "height", "=", "width", "/", "2"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["height", "width"],
+          "operators": ["=", "/"],
+          "values": ["2"]
+        },
+        "hint": "Use width in the calculation",
+        "effect": "Tank height is set!",
+        "showPrevious": true,
+        "previousContext": "Width is 100:",
+        "hints": [
+          "Create height based on width",
+          "Divide width by 2",
+          "Declare and calculate in one step"
+        ]
+      },
+      {
+        "title": "Tank Area",
+        "description": "Calculate area using width * height",
+        "correctSequence": ["var", "area", "=", "width", "*", "height"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["area", "width", "height"],
+          "operators": ["=", "*"],
+          "values": []
+        },
+        "hint": "Multiply width and height",
+        "effect": "Tank area calculated!",
+        "showPrevious": true,
+        "previousContext": "We have width and height:",
+        "hints": [
+          "Area is width times height",
+          "Use * to multiply",
+          "Store result in new area variable"
+        ]
+      },
+      {
+        "title": "Decrease Width",
+        "description": "Subtract 20 from the width",
+        "correctSequence": ["width", "=", "width", "-", "20"],
+        "codeItems": {
+          "keywords": [],
+          "variables": ["width"],
+          "operators": ["=", "-"],
+          "values": ["20"]
+        },
+        "hint": "Use - for subtraction",
+        "effect": "Tank width decreased!",
+        "showPrevious": true,
+        "previousContext": "Current width is 100:",
+        "hints": [
+          "- is the subtraction operator",
+          "Use the current width value",
+          "width = width - 20 reduces it"
+        ]
+      },
+      {
+        "title": "Update Area",
+        "description": "Update area with new width * height",
+        "correctSequence": ["area", "=", "width", "*", "height"],
+        "codeItems": {
+          "keywords": [],
+          "variables": ["area", "width", "height"],
+          "operators": ["=", "*"],
+          "values": []
+        },
+        "hint": "Recalculate with new width",
+        "effect": "Area updated!",
+        "showPrevious": true,
+        "previousContext": "Width changed:",
+        "hints": [
+          "Area needs updating after width change",
+          "Use the same formula as before",
+          "Multiply the new width and height"
+        ]
+      },
+      {
+        "title": "Multiple Operations",
+        "description": "What will value be? var value = 2 + 3 * 4 - 1",
+        "correctSequence": ["var", "value", "=", "13"],
+        "codeItems": {
+          "keywords": ["var"],
+          "variables": ["value"],
+          "operators": ["="],
+          "values": ["13", "20", "11"]
+        },
+        "hint": "Follow order of operations",
+        "effect": "Correct! The answer is 13",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "First: 3 * 4 = 12",
+          "Then: 2 + 12 = 14",
+          "Finally: 14 - 1 = 13"
+        ]
+      },
+      {
+        "title": "Empty Variable",
+        "description": "What will isEmpty be? var test; \n var isEmpty = test == undefined",
+        "correctSequence": ["true"],
+        "codeItems": {
+          "values": ["true", "false", "undefined", "null"]
+        },
+        "hint": "Uninitialized variables are undefined",
+        "effect": "Correct! Uninitialized variables are undefined",
+        "showPrevious": false,
+        "previousContext": null,
+        "hints": [
+          "Variables without values are undefined",
+          "test == undefined checks this",
+          "So isEmpty will be true"
+        ]
+      }
+    ]
+  }

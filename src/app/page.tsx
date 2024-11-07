@@ -1,101 +1,293 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+import React, { useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { LightbulbIcon } from 'lucide-react';
+import LevelNavigator from '@/components/ui/levelnavigator';
+import lvls from '../lib/levels.json';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+const CodeBuilderGame = () => {
+
+
+  const [score, setScore] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(0);
+  const [droppedItems, setDroppedItems] = useState([]);
+  const [feedback, setFeedback] = useState('');
+  const [fishSize, setFishSize] = useState(30);
+  const [completedSequences, setCompletedSequences] = useState([]);
+  const [currentHint, setCurrentHint] = useState(0);
+  const [showHint, setShowHint] = useState(false);
+  const [completedLevels, setCompletedLevels] = useState([]);
+  const { levels } = lvls;
+
+  const renderFish = (x, y, size) => (
+    <g transform={`translate(${x},${y})`}>
+      <path
+        d={`
+          M ${-size} 0
+          C ${-size * 0.8} ${-size * 0.5}, ${size * 0.8} ${-size * 0.5}, ${size} 0
+          C ${size * 0.8} ${size * 0.5}, ${-size * 0.8} ${size * 0.5}, ${-size} 0
+          Z
+        `}
+        fill="#FF6B6B"
+      />
+      <circle cx={size * 0.5} cy={-size * 0.2} r={size * 0.15} fill="white" />
+      <circle cx={size * 0.5} cy={-size * 0.2} r={size * 0.07} fill="black" />
+      <path
+        d={`
+          M ${-size} 0
+          L ${-size * 1.3} ${-size * 0.3}
+          L ${-size * 1.3} ${size * 0.3}
+          Z
+        `}
+        fill="#FF6B6B"
+      />
+    </g>
   );
-}
+
+  const handleDragStart = (e, item) => {
+    e.dataTransfer.setData('text', item);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const item = e.dataTransfer.getData('text');
+    if (droppedItems.length < levels[currentLevel].correctSequence.length) {
+      setDroppedItems([...droppedItems, item]);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const checkAnswer = () => {
+    const isCorrect = JSON.stringify(droppedItems) === 
+                     JSON.stringify(levels[currentLevel].correctSequence);
+    
+    if (isCorrect) {
+      setScore(score + 100);
+      setFeedback('Correct! ' + levels[currentLevel].effect);
+      setCompletedSequences([...completedSequences, {
+        level: currentLevel,
+        sequence: droppedItems
+      }]);
+      
+      // Add level to completed levels if not already included
+      if (!completedLevels.includes(currentLevel)) {
+        setCompletedLevels([...completedLevels, currentLevel]);
+      }
+      
+      if (currentLevel === 2) setFishSize(fishSize + 10);
+      
+      setTimeout(() => {
+        if (currentLevel < levels.length - 1) {
+          setCurrentLevel(currentLevel + 1);
+          setDroppedItems([]);
+          setFeedback('');
+          setShowHint(false);
+          setCurrentHint(0);
+        } else {
+          setFeedback('Congratulations! You\'ve mastered var declarations! 🎉');
+        }
+      }, 2000);
+    } else {
+      setFeedback('Try again! ' + levels[currentLevel].hint);
+    }
+  };
+
+  const resetCode = () => {
+    setDroppedItems([]);
+    setFeedback('');
+  };
+
+  const handleHint = () => {
+    setShowHint(true);
+    if (currentHint < levels[currentLevel].hints.length - 1) {
+      setCurrentHint(currentHint + 1);
+    } else {
+      setCurrentHint(0);
+    }
+  };
+
+  // Add handler for level selection
+  const handleLevelSelect = (levelIndex) => {
+    setCurrentLevel(levelIndex);
+    setDroppedItems([]);
+    setFeedback('');
+    setShowHint(false);
+    setCurrentHint(0);
+  };
+
+
+  const renderPreviousCode = () => {
+    if (!levels[currentLevel]?.showPrevious || completedSequences.length === 0) return null;
+
+    const previousCode = completedSequences[completedSequences.length - 1];
+    return (
+      <div className="bg-gray-100 p-4 rounded mb-4">
+        <div className="text-sm text-gray-600 mb-2">{levels[currentLevel].previousContext}</div>
+        <div className="flex gap-2">
+          {previousCode.sequence.map((item, index) => (
+            <span key={index} className="px-3 py-1 bg-gray-300 rounded">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <Card className="w-full max-w-4xl mx-auto">
+      <CardHeader>
+        <CardTitle className="flex justify-between items-center">
+          <span>Learn JavaScript var with Fish!</span>
+          <span>Score: {score}</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+        <LevelNavigator
+            levels={levels}
+            currentLevel={currentLevel}
+            completedLevels={completedLevels}
+            onLevelSelect={handleLevelSelect}
+          />
+          {/* Ocean View */}
+          <div className="border-4 border-blue-200 rounded-lg overflow-hidden">
+            <svg width="400" height="200" viewBox="0 0 400 200">
+              <rect width="400" height="200" fill="#E3F2FD" />
+              
+              {/* Animated waves */}
+              <path d="M 0 180 Q 100 160, 200 180 Q 300 200, 400 180" 
+                    fill="none" 
+                    stroke="rgba(255,255,255,0.5)" 
+                    strokeWidth="2">
+                <animate 
+                  attributeName="d" 
+                  values="M 0 180 Q 100 160, 200 180 Q 300 200, 400 180;
+                         M 0 180 Q 100 200, 200 180 Q 300 160, 400 180;
+                         M 0 180 Q 100 160, 200 180 Q 300 200, 400 180"
+                  dur="4s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              
+              {renderFish(200, 100, fishSize)}
+              
+              {/* Bubbles */}
+              <circle cx="50" cy="150" r="10" fill="rgba(255,255,255,0.5)">
+                <animate 
+                  attributeName="cy" 
+                  values="150;50;150" 
+                  dur="4s" 
+                  repeatCount="indefinite" 
+                />
+              </circle>
+              <circle cx="80" cy="120" r="8" fill="rgba(255,255,255,0.5)">
+                <animate 
+                  attributeName="cy" 
+                  values="120;40;120" 
+                  dur="3s" 
+                  repeatCount="indefinite" 
+                />
+              </circle>
+            </svg>
+          </div>
+
+          {/* Challenge Description */}
+          <div className="bg-blue-50 p-4 rounded">
+            <h3 className="font-bold mb-2">Level {currentLevel + 1}: {levels[currentLevel].title}</h3>
+            <p>{levels[currentLevel].description}</p>
+          </div>
+
+          {/* Hint System */}
+          <div className="flex items-center gap-4">
+            <Button 
+              onClick={handleHint}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <LightbulbIcon className="w-4 h-4" />
+              Need a Hint?
+            </Button>
+            {showHint && (
+              <div className="flex-1 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                {levels[currentLevel].hints[currentHint]}
+              </div>
+            )}
+          </div>
+
+          {/* Previous Code Context */}
+          {renderPreviousCode()}
+
+          {/* Code Construction Area */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-gray-600">Your Answer:</div>
+            <div 
+              className="min-h-20 p-4 bg-gray-800 rounded flex gap-2 items-center"
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+            >
+              {droppedItems.map((item, index) => (
+                <span 
+                  key={index}
+                  className="px-3 py-1 bg-blue-500 text-white rounded"
+                >
+                  {item}
+                </span>
+              ))}
+              {droppedItems.length === 0 && (
+                <span className="text-gray-400">Drag and drop code pieces here...</span>
+              )}
+            </div>
+          </div>
+
+          {/* Code Elements */}
+          <div className="space-y-4">
+      {Object.entries(levels[currentLevel].codeItems).map(([category, items]) => (
+        items.length > 0 && (
+          <div key={category} className="space-y-2">
+            <h4 className="font-medium capitalize">{category}:</h4>
+            <div className="flex flex-wrap gap-2">
+              {items.map((item) => (
+                <span
+                  key={item}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, item)}
+                  className="px-3 py-1 bg-gray-200 rounded cursor-move hover:bg-gray-300"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        )
+      ))}
+    </div>
+
+          <div className="flex gap-4">
+            <Button onClick={checkAnswer} className="w-full">
+              Check Answer
+            </Button>
+            <Button onClick={resetCode} variant="outline" className="w-full">
+              Clear Code
+            </Button>
+          </div>
+
+          {feedback && (
+            <div className={`p-4 rounded text-center ${
+              feedback.includes('Correct') ? 'bg-green-100' : 'bg-yellow-100'
+            }`}>
+              {feedback}
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default CodeBuilderGame;
