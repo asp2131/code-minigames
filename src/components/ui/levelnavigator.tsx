@@ -3,7 +3,29 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Check, Lock } from 'lucide-react';
 
-const LevelNavigator = ({ 
+interface Level {
+  title: string;
+  description: string;
+  correctSequence: string[];
+  effect: string;
+  hint: string;
+  hints: string[];
+  showPrevious?: boolean;
+  previousContext?: string;
+  codeItems: {
+    [key: string]: string[];
+  };
+}
+
+interface LevelNavigatorProps {
+  levels: Level[];
+  currentLevel: number;
+  completedLevels: number[];
+  onLevelSelect: (levelIndex: number) => void;
+  className?: string;
+}
+
+const LevelNavigator: React.FC<LevelNavigatorProps> = ({ 
   levels, 
   currentLevel, 
   completedLevels, 
@@ -15,9 +37,9 @@ const LevelNavigator = ({
       <CardContent className="p-4">
         <div className="flex flex-wrap gap-2">
           {levels.map((level, index) => {
-            const isCompleted = completedLevels.includes(index);
-            const isCurrentLevel = currentLevel === index;
-            const isLocked = !isCompleted && index > Math.min(currentLevel, ...completedLevels) + 1;
+            const isCompleted: boolean = completedLevels.includes(index);
+            const isCurrentLevel: boolean = currentLevel === index;
+            const isLocked: boolean = !isCompleted && index > Math.min(currentLevel, ...completedLevels) + 1;
 
             return (
               <Button
